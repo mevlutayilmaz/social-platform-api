@@ -1,10 +1,59 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{DC30BA9F-B8FE-49BF-B8C6-AC7F2D159F76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialPlatformAPI.Domain", "Core\SocialPlatformAPI.Domain\SocialPlatformAPI.Domain.csproj", "{76D3FA3C-4B97-430D-A1D6-12EE68DC22AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialPlatformAPI.Application", "Core\SocialPlatformAPI.Application\SocialPlatformAPI.Application.csproj", "{80F4DC2A-9128-4761-85BE-F9C38E49E596}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{1BF440E2-C471-493D-B2F7-99E93FC5CF47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialPlatformAPI.Infrastructure", "Infrastructure\SocialPlatformAPI.Infrastructure\SocialPlatformAPI.Infrastructure.csproj", "{0639173A-B8B6-4666-AA7E-13F3E8912007}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialPlatformAPI.Persistence", "Infrastructure\SocialPlatformAPI.Persistence\SocialPlatformAPI.Persistence.csproj", "{4C61D2A6-9E10-4625-BC54-72FC5648E0C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{F5F03D89-12DB-4BC0-9A37-63BE4CDE793C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialPlatformAPI.API", "Presentation\SocialPlatformAPI.API\SocialPlatformAPI.API.csproj", "{8DDA9C29-D812-4978-91A5-9BB9F9001D07}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76D3FA3C-4B97-430D-A1D6-12EE68DC22AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76D3FA3C-4B97-430D-A1D6-12EE68DC22AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76D3FA3C-4B97-430D-A1D6-12EE68DC22AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76D3FA3C-4B97-430D-A1D6-12EE68DC22AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80F4DC2A-9128-4761-85BE-F9C38E49E596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80F4DC2A-9128-4761-85BE-F9C38E49E596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80F4DC2A-9128-4761-85BE-F9C38E49E596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80F4DC2A-9128-4761-85BE-F9C38E49E596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0639173A-B8B6-4666-AA7E-13F3E8912007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0639173A-B8B6-4666-AA7E-13F3E8912007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0639173A-B8B6-4666-AA7E-13F3E8912007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0639173A-B8B6-4666-AA7E-13F3E8912007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C61D2A6-9E10-4625-BC54-72FC5648E0C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C61D2A6-9E10-4625-BC54-72FC5648E0C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C61D2A6-9E10-4625-BC54-72FC5648E0C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C61D2A6-9E10-4625-BC54-72FC5648E0C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DDA9C29-D812-4978-91A5-9BB9F9001D07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DDA9C29-D812-4978-91A5-9BB9F9001D07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DDA9C29-D812-4978-91A5-9BB9F9001D07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DDA9C29-D812-4978-91A5-9BB9F9001D07}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{76D3FA3C-4B97-430D-A1D6-12EE68DC22AF} = {DC30BA9F-B8FE-49BF-B8C6-AC7F2D159F76}
+		{80F4DC2A-9128-4761-85BE-F9C38E49E596} = {DC30BA9F-B8FE-49BF-B8C6-AC7F2D159F76}
+		{0639173A-B8B6-4666-AA7E-13F3E8912007} = {1BF440E2-C471-493D-B2F7-99E93FC5CF47}
+		{4C61D2A6-9E10-4625-BC54-72FC5648E0C6} = {1BF440E2-C471-493D-B2F7-99E93FC5CF47}
+		{8DDA9C29-D812-4978-91A5-9BB9F9001D07} = {F5F03D89-12DB-4BC0-9A37-63BE4CDE793C}
 	EndGlobalSection
 EndGlobal
