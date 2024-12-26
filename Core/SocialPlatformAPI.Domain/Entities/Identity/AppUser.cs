@@ -12,6 +12,8 @@ namespace SocialPlatformAPI.Domain.Entities.Identity
         public string NameSurname { get; set; }
         public string? ProfilePicture { get; set; }
         public string? Bio { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenEndDate { get; set; }
 
         public ICollection<Post> Posts { get; set; }
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();

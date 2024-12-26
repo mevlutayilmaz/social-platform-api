@@ -6,6 +6,8 @@ using SocialPlatformAPI.Persistence.Contexts;
 using SocialPlatformAPI.Domain.Entities.Identity;
 using SocialPlatformAPI.Application.Repositories;
 using SocialPlatformAPI.Persistence.Repositories;
+using SocialPlatformAPI.Application.Interfaces.Services;
+using SocialPlatformAPI.Persistence.Services;
 
 namespace SocialPlatformAPI.Persistence
 {
@@ -28,6 +30,9 @@ namespace SocialPlatformAPI.Persistence
 
             services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
             services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
+
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
 
         }
     }
