@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using SocialPlatformAPI.Persistence.Contexts;
 using SocialPlatformAPI.Domain.Entities.Identity;
+using SocialPlatformAPI.Application.Repositories;
+using SocialPlatformAPI.Persistence.Repositories;
 
 namespace SocialPlatformAPI.Persistence
 {
@@ -23,6 +25,9 @@ namespace SocialPlatformAPI.Persistence
                 options.Password.RequireUppercase = false;
             }).AddEntityFrameworkStores<SocialPlatformDbContext>()
             .AddDefaultTokenProviders();
+
+            services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
+            services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
         }
     }
