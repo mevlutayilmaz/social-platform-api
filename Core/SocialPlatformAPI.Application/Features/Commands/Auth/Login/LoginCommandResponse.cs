@@ -1,6 +1,6 @@
-﻿namespace SocialPlatformAPI.Application.DTOs
+﻿namespace SocialPlatformAPI.Application.Features.Commands.Auth.Login
 {
-    public class TokenDTO
+    public class LoginCommandResponse
     {
         public string AccessToken { get; set; }
         public DateTime Expiration { get; set; }

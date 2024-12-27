@@ -5,14 +5,16 @@ using SocialPlatformAPI.Persistence;
 using SocialPlatformAPI.Mapper;
 using System.Security.Claims;
 using System.Text;
+using SocialPlatformAPI.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddInfrastructureService();
 builder.Services.AddMapperService();
+builder.Services.AddApplicationService();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();

@@ -38,7 +38,7 @@ namespace SocialPlatformAPI.Persistence.Services
             if (user != null)
             {
                 user.RefreshToken = refreshToken;
-                user.RefreshTokenEndDate = accessTokenDate.AddMinutes(addOnAccessTokenDate));
+                user.RefreshTokenEndDate = accessTokenDate.AddMinutes(addOnAccessTokenDate);
                 await userManager.UpdateAsync(user);
             }
             else
