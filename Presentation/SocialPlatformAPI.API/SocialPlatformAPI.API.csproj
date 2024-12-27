@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\SocialPlatformAPI.Application\SocialPlatformAPI.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\SocialPlatformAPI.Infrastructure\SocialPlatformAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\SocialPlatformAPI.Mapper\SocialPlatformAPI.Mapper.csproj" />
     <ProjectReference Include="..\..\Infrastructure\SocialPlatformAPI.Persistence\SocialPlatformAPI.Persistence.csproj" />
   </ItemGroup>
 

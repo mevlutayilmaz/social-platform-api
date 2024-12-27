@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SocialPlatformAPI.Infrastructure;
 using SocialPlatformAPI.Persistence;
+using SocialPlatformAPI.Mapper;
 using System.Security.Claims;
 using System.Text;
 
@@ -11,6 +12,7 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.Al
 
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddInfrastructureService();
+builder.Services.AddMapperService();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
