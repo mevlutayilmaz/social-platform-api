@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SocialPlatformAPI.Infrastructure.Tokens
+namespace SocialPlatformAPI.Infrastructure.Services.Tokens
 {
     public class TokenService(IConfiguration configuration) : ITokenService
     {

@@ -6,6 +6,7 @@ using SocialPlatformAPI.Mapper;
 using System.Security.Claims;
 using System.Text;
 using SocialPlatformAPI.Application;
+using SocialPlatformAPI.Infrastructure.Services.Storage.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddInfrastructureService();
 builder.Services.AddMapperService();
 builder.Services.AddApplicationService();
+builder.Services.AddStorage<AzureStorage>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
