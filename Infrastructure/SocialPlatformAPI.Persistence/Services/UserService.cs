@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using SocialPlatformAPI.Application.DTOs.Users;
 using SocialPlatformAPI.Application.Interfaces.Services;
 using SocialPlatformAPI.Domain.Entities.Identity;
@@ -10,8 +11,12 @@ using System.Threading.Tasks;
 
 namespace SocialPlatformAPI.Persistence.Services
 {
-    public class UserService(UserManager<AppUser> userManager) : IUserService
+    public class UserService(UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor) : IUserService
     {
+        public string? GetCurrentUsername => httpContextAccessor?.HttpContext?.User?.Identity?.Name;
+
+        public AppUser? GetCurrentUser => !string.IsNullOrEmpty(GetCurrentUsername) ? userManager.FindByNameAsync(GetCurrentUsername).Result : null;
+
         public async Task<CreateUserResponseDTO> CreateAsync(CreateUserDTO user)
         {
             IdentityResult result = await userManager.CreateAsync(new()

@@ -11,7 +11,7 @@ namespace SocialPlatformAPI.Persistence.Repositories
     {
         public DbSet<T> Table => context.Set<T>();
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate = null, 
+        public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null, 
             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, 
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, 
             bool enableTracking = false)
@@ -21,10 +21,10 @@ namespace SocialPlatformAPI.Persistence.Repositories
             if (include is not null) query = include(query);
             if (predicate is not null) query = query.Where(predicate);
             if (orderBy is not null) query = orderBy(query);
-            return query;
+            return await query.ToListAsync();
         }
 
-        public IQueryable<T> GetAllByPaging(Expression<Func<T, bool>>? predicate = null, 
+        public async Task<IList<T>> GetAllByPagingAsync(Expression<Func<T, bool>>? predicate = null, 
             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, 
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, 
             int pageCount = 1, int itemCount = 5, bool enableTracking = false)
@@ -34,17 +34,17 @@ namespace SocialPlatformAPI.Persistence.Repositories
             if (include is not null) query = include(query);
             if(predicate is not null) query = query.Where(predicate);
             if(orderBy is not null) query = orderBy(query);
-            return query.Skip(itemCount * (pageCount - 1)).Take(itemCount);
+            return await query.Skip(itemCount * (pageCount - 1)).Take(itemCount).ToListAsync();
         }
 
-        public Task<T> GetAsync(Expression<Func<T, bool>> predicate,
+        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate,
             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
             bool enableTracking = false)
         {
             var query = Table.AsQueryable();
             if(!enableTracking) query = query.AsNoTracking();
             if(include is not null) query = include(query);
-            return query.FirstOrDefaultAsync(predicate);
+            return await query.FirstOrDefaultAsync(predicate);
         }
 
         public async Task<T> GetByIdAsync(string id, bool enableTracking = false)

@@ -15,8 +15,4 @@
     <ProjectReference Include="..\SocialPlatformAPI.Domain\SocialPlatformAPI.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Queries\" />
-  </ItemGroup>
-
 </Project>

@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddInfrastructureService();
 builder.Services.AddMapperService();
