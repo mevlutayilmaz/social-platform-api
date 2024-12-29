@@ -8,7 +8,7 @@ using SocialPlatformAPI.Application.Features.Queries.Posts.GetPostById;
 
 namespace SocialPlatformAPI.API.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Admin")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostsController(IMediator mediator) : ControllerBase
