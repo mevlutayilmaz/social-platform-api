@@ -15,7 +15,12 @@ namespace SocialPlatformAPI.Persistence.Services
     {
         public string? GetCurrentUsername => httpContextAccessor?.HttpContext?.User?.Identity?.Name;
 
-        public AppUser? GetCurrentUser => !string.IsNullOrEmpty(GetCurrentUsername) ? userManager.FindByNameAsync(GetCurrentUsername).Result : null;
+        async Task<AppUser?> IUserService.GetCurrentUser()
+        {
+            if(!string.IsNullOrEmpty(GetCurrentUsername))
+                return await userManager.FindByNameAsync(GetCurrentUsername);
+            return null;
+        }
 
         public async Task<CreateUserResponseDTO> CreateAsync(CreateUserDTO user)
         {

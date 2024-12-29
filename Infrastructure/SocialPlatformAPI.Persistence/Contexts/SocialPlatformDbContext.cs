@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SocialPlatformAPI.Domain.Entities;
+using SocialPlatformAPI.Domain.Entities.Common;
 using SocialPlatformAPI.Domain.Entities.Identity;
 
 namespace SocialPlatformAPI.Persistence.Contexts
@@ -28,6 +29,23 @@ namespace SocialPlatformAPI.Persistence.Contexts
                 .WithMany(u => u.Following)
                 .HasForeignKey(f => f.FollowingId);
 
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var entry in entries)
+            {
+                _ = entry.State switch
+                {
+                    EntityState.Added => entry.Entity.CreatedDate = DateTime.UtcNow,
+                    EntityState.Modified => entry.Entity.UpdatedDate = DateTime.UtcNow,
+                    _ => DateTime.UtcNow
+                };
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
         }
 
     }

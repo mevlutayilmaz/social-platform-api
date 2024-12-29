@@ -18,7 +18,7 @@ namespace SocialPlatformAPI.Persistence.Services
     {
         public async Task CreatePostAsync(CreatePostDTO post)
         {
-            AppUser? user = userService.GetCurrentUser;
+            AppUser? user = await userService.GetCurrentUser();
 
             if (user is not null)
             {
