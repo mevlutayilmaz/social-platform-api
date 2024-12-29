@@ -23,7 +23,8 @@ namespace SocialPlatformAPI.Application.Mapping
             CreateMap<CreatePostDTO, CreatePostCommandRequest>().ReverseMap();
             CreateMap<GetPostDTO, GetPostByIdQueryResponse>().ReverseMap();
             CreateMap<CreatePostDTO, Post>().ReverseMap();
-            CreateMap<GetPostDTO, Post>().ReverseMap();
+            CreateMap<GetPostDTO, Post>();
+            CreateMap<Post, GetPostDTO>().ForMember(dest => dest.LikeCount, options => options.MapFrom(src => src.Likes.Count));
 
             CreateMap<AppUser, CreateUserCommandRequest>().ReverseMap();
             CreateMap<AppUser, GetUserDTO>().ReverseMap();

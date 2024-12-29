@@ -37,7 +37,7 @@ namespace SocialPlatformAPI.Persistence.Services
         public async Task<IList<GetPostDTO>> GetAllPostsAsync(Pagination pagination)
         {
             var posts = await postReadRepository.GetAllByPagingAsync(
-                include: x => x.Include(p => p.User),
+                include: x => x.Include(p => p.User).Include(p => p.Likes),
                 pageCount: pagination.PageCount,
                 itemCount: pagination.ItemCount);
             return mapper.Map<IList<Post>, IList<GetPostDTO>>(posts);
@@ -47,7 +47,7 @@ namespace SocialPlatformAPI.Persistence.Services
         {
             Post post = await postReadRepository.GetAsync(
                 predicate: p => p.Id == Guid.Parse(postId),
-                include: x => x.Include(p => p.User));
+                include: x => x.Include(p => p.User).Include(p => p.Likes));
             return mapper.Map<Post, GetPostDTO>(post);
         }
     }

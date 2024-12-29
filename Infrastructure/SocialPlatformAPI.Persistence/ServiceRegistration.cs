@@ -35,6 +35,7 @@ namespace SocialPlatformAPI.Persistence
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<ILikeService, LikeService>();
 
         }
     }

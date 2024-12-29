@@ -29,6 +29,10 @@ namespace SocialPlatformAPI.Persistence.Contexts
                 .WithMany(u => u.Following)
                 .HasForeignKey(f => f.FollowingId);
 
+            builder.Entity<Like>()
+                .HasIndex(l => new { l.UserId, l.PostId })
+                .IsUnique();
+
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

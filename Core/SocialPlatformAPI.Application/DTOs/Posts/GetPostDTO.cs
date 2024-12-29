@@ -7,6 +7,7 @@ namespace SocialPlatformAPI.Application.DTOs.Posts
         public string Id { get; set; }
         public string Content { get; set; }
         public string? MediaUrl { get; set; }
+        public int LikeCount { get; set; }
         public GetUserDTO User { get; set; }
     }
 }

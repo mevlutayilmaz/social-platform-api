@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SocialPlatformAPI.Persistence.Contexts;
@@ -11,9 +12,11 @@ using SocialPlatformAPI.Persistence.Contexts;
 namespace SocialPlatformAPI.Persistence.Migrations
 {
     [DbContext(typeof(SocialPlatformDbContext))]
-    partial class SocialPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241229210514_mig_2")]
+    partial class mig_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
