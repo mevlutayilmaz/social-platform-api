@@ -8,6 +8,7 @@ namespace SocialPlatformAPI.Application
         public static void AddApplicationService(this IServiceCollection services)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
     }
 }

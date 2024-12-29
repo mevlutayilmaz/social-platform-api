@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SocialPlatformAPI.Application;
 using SocialPlatformAPI.Infrastructure;
+using SocialPlatformAPI.Infrastructure.Services.Storage.Azure;
 using SocialPlatformAPI.Persistence;
-using SocialPlatformAPI.Mapper;
 using System.Security.Claims;
 using System.Text;
-using SocialPlatformAPI.Application;
-using SocialPlatformAPI.Infrastructure.Services.Storage.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +15,6 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddInfrastructureService();
-builder.Services.AddMapperService();
 builder.Services.AddApplicationService();
 builder.Services.AddStorage<AzureStorage>();
 

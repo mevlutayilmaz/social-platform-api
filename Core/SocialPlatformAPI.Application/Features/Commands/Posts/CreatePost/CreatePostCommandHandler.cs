@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using SocialPlatformAPI.Application.DTOs.Posts;
-using SocialPlatformAPI.Application.Interfaces.AutoMapper;
 using SocialPlatformAPI.Application.Interfaces.Services;
 
 namespace SocialPlatformAPI.Application.Features.Commands.Posts.CreatePost
@@ -9,7 +9,7 @@ namespace SocialPlatformAPI.Application.Features.Commands.Posts.CreatePost
     {
         public async Task<CreatePostCommandResponse> Handle(CreatePostCommandRequest request, CancellationToken cancellationToken)
         {
-            await postService.CreatePostAsync(mapper.Map<CreatePostDTO, CreatePostCommandRequest>(request));
+            await postService.CreatePostAsync(mapper.Map<CreatePostCommandRequest, CreatePostDTO>(request));
             return new();
         }
     }

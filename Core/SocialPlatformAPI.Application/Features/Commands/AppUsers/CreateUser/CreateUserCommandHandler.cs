@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using SocialPlatformAPI.Application.DTOs.Users;
-using SocialPlatformAPI.Application.Interfaces.AutoMapper;
 using SocialPlatformAPI.Application.Interfaces.Services;
 
 namespace SocialPlatformAPI.Application.Features.Commands.AppUsers.CreateUser
@@ -9,8 +9,8 @@ namespace SocialPlatformAPI.Application.Features.Commands.AppUsers.CreateUser
     {
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
-            CreateUserResponseDTO response = await userService.CreateAsync(mapper.Map<CreateUserDTO, CreateUserCommandRequest>(request));
-            return mapper.Map<CreateUserCommandResponse, CreateUserResponseDTO>(response);
+            CreateUserResponseDTO response = await userService.CreateAsync(mapper.Map<CreateUserCommandRequest, CreateUserDTO>(request));
+            return mapper.Map<CreateUserResponseDTO, CreateUserCommandResponse>(response);
         }
     }
 }

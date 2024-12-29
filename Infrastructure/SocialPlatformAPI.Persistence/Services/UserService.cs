@@ -3,11 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using SocialPlatformAPI.Application.DTOs.Users;
 using SocialPlatformAPI.Application.Interfaces.Services;
 using SocialPlatformAPI.Domain.Entities.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialPlatformAPI.Persistence.Services
 {

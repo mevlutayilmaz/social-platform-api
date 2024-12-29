@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using SocialPlatformAPI.Application.DTOs;
-using SocialPlatformAPI.Application.Interfaces.AutoMapper;
 using SocialPlatformAPI.Application.Interfaces.Services;
 
 namespace SocialPlatformAPI.Application.Features.Commands.Auth.RefreshTokenLogin
@@ -10,7 +10,7 @@ namespace SocialPlatformAPI.Application.Features.Commands.Auth.RefreshTokenLogin
         public async Task<RefreshTokenLoginCommandResponse> Handle(RefreshTokenLoginCommandRequest request, CancellationToken cancellationToken)
         {
             TokenDTO token = await authService.RefreshTokenLoginAsync(request.RefreshToken);
-            return mapper.Map<RefreshTokenLoginCommandResponse, TokenDTO>(token);
+            return mapper.Map<TokenDTO, RefreshTokenLoginCommandResponse>(token);
         }
     }
 }

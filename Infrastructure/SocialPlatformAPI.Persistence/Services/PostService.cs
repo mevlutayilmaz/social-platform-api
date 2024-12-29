@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SocialPlatformAPI.Application.DTOs;
 using SocialPlatformAPI.Application.DTOs.Posts;
-using SocialPlatformAPI.Application.Interfaces.AutoMapper;
 using SocialPlatformAPI.Application.Interfaces.Services;
 using SocialPlatformAPI.Application.Repositories;
 using SocialPlatformAPI.Domain.Entities;
@@ -23,7 +23,7 @@ namespace SocialPlatformAPI.Persistence.Services
             if (user is not null)
             {
                 post.UserId = user.Id;
-                bool result = await postWriteRepository.AddAsync(mapper.Map<Post, CreatePostDTO>(post));
+                bool result = await postWriteRepository.AddAsync(mapper.Map<CreatePostDTO, Post>(post));
                 await postWriteRepository.SaveAsync();
             }
         }
@@ -36,8 +36,11 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task<IList<GetPostDTO>> GetAllPostsAsync(Pagination pagination)
         {
-            var posts = await postReadRepository.GetAllByPagingAsync(pageCount: pagination.PageCount, itemCount: pagination.ItemCount);
-            return mapper.Map<GetPostDTO, Post>(posts);
+            var posts = await postReadRepository.GetAllByPagingAsync(
+                include: x => x.Include(p => p.User),
+                pageCount: pagination.PageCount,
+                itemCount: pagination.ItemCount);
+            return mapper.Map<IList<Post>, IList<GetPostDTO>>(posts);
         }
 
         public async Task<GetPostDTO> GetPostByIdAsync(string postId)
@@ -45,7 +48,7 @@ namespace SocialPlatformAPI.Persistence.Services
             Post post = await postReadRepository.GetAsync(
                 predicate: p => p.Id == Guid.Parse(postId),
                 include: x => x.Include(p => p.User));
-            return mapper.Map<GetPostDTO, Post>(post);
+            return mapper.Map<Post, GetPostDTO>(post);
         }
     }
 }

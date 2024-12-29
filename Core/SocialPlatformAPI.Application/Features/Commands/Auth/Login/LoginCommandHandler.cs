@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using SocialPlatformAPI.Application.DTOs;
-using SocialPlatformAPI.Application.Interfaces.AutoMapper;
 using SocialPlatformAPI.Application.Interfaces.Services;
 
 namespace SocialPlatformAPI.Application.Features.Commands.Auth.Login
@@ -10,7 +10,7 @@ namespace SocialPlatformAPI.Application.Features.Commands.Auth.Login
         public async Task<LoginCommandResponse> Handle(LoginCommandRequest request, CancellationToken cancellationToken)
         {
             TokenDTO token = await authService.LoginAsync(request.UsernameOrEmail, request.Password, 60000);
-            return mapper.Map<LoginCommandResponse, TokenDTO>(token);
+            return mapper.Map<TokenDTO, LoginCommandResponse>(token);
         }
     }
 }
