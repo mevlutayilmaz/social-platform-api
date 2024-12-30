@@ -1,6 +1,6 @@
-﻿namespace SocialPlatformAPI.Application.DTOs.Users
+﻿namespace SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowers
 {
-    public class GetUserDTO
+    public class GetFollowersQueryResponse
     {
         public string Username { get; set; }
         public string NameSurname { get; set; }

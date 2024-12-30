@@ -21,7 +21,7 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task LikeCommentAsync(string commentId)
         {
-            AppUser? user = await userService.GetCurrentUser();
+            AppUser? user = await userService.GetCurrentUserAsync();
             if (user is not null)
             {
                 await commentLikeWriteRepository.AddAsync(new() 
@@ -36,7 +36,7 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task LikePostAsync(string postId)
         {
-            AppUser? user = await userService.GetCurrentUser();
+            AppUser? user = await userService.GetCurrentUserAsync();
             if(user is not null)
             {
                 await postLikeWriteRepository.AddAsync(new() 
@@ -51,7 +51,7 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task UndoLikeCommentAsync(string commentId)
         {
-            AppUser? user = await userService.GetCurrentUser();
+            AppUser? user = await userService.GetCurrentUserAsync();
             if (user is not null)
             {
                 CommentLike commentLike = await commentLikeReadRepository.GetAsync(
@@ -64,7 +64,7 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task UndoLikePostAsync(string postId)
         {
-            AppUser? user = await userService.GetCurrentUser();
+            AppUser? user = await userService.GetCurrentUserAsync();
             if (user is not null)
             {
                 PostLike postLike = await postLikeReadRepository.GetAsync(

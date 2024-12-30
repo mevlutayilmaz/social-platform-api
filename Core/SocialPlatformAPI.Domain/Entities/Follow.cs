@@ -8,5 +8,6 @@ namespace SocialPlatformAPI.Domain.Entities
         public string FollowingId { get; set; }
         public AppUser Follower { get; set; }
         public AppUser Following { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

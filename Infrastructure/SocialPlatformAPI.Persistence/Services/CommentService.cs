@@ -16,7 +16,7 @@ namespace SocialPlatformAPI.Persistence.Services
     {
         public async Task AddCommentAsync(string postId, string content)
         {
-            AppUser? user = await userService.GetCurrentUser();
+            AppUser? user = await userService.GetCurrentUserAsync();
             if (user is not null)
             {
                 await commentWriteRepository.AddAsync(new()
@@ -38,7 +38,7 @@ namespace SocialPlatformAPI.Persistence.Services
         public async Task<IList<GetCommentDTO>> GetCommentsAsync(string postId)
         {
             IList<Comment> comments = await commentReadRepository.GetAllAsync(
-                include: x => x.Include(c => c.User),
+                include: x => x.Include(c => c.User).Include(c => c.Likes),
                 predicate: c => c.PostId == Guid.Parse(postId));
             return mapper.Map<IList<Comment>, IList<GetCommentDTO>>(comments);
         }

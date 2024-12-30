@@ -1,16 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SocialPlatformAPI.Application.DTOs.Users;
 using SocialPlatformAPI.Application.Interfaces.Services;
+using SocialPlatformAPI.Application.Repositories;
+using SocialPlatformAPI.Domain.Entities;
 using SocialPlatformAPI.Domain.Entities.Identity;
 
 namespace SocialPlatformAPI.Persistence.Services
 {
-    public class UserService(UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor) : IUserService
+    public class UserService(
+        UserManager<AppUser> userManager, 
+        IHttpContextAccessor httpContextAccessor,
+        IWriteRepository<Follow> followWriteRepository,
+        IReadRepository<Follow> followReadRepository,
+        IMapper mapper) : IUserService
     {
         public string? GetCurrentUsername => httpContextAccessor?.HttpContext?.User?.Identity?.Name;
 
-        async Task<AppUser?> IUserService.GetCurrentUser()
+        public async Task<AppUser?> GetCurrentUserAsync()
         {
             if(!string.IsNullOrEmpty(GetCurrentUsername))
                 return await userManager.FindByNameAsync(GetCurrentUsername);
@@ -48,6 +57,54 @@ namespace SocialPlatformAPI.Persistence.Services
             }
             else
                 throw new Exception("User not found!");
+        }
+
+        public async Task FollowUserAsync(string followingId)
+        {
+            AppUser? user = await GetCurrentUserAsync();
+            if (user is not null)
+            {
+                await followWriteRepository.AddAsync(new()
+                {
+                    FollowerId = user.Id,
+                    FollowingId = followingId,
+                    CreatedDate = DateTime.UtcNow
+                });
+                await followWriteRepository.SaveAsync();
+            }
+        }
+
+        public async Task UnfollowUserAsync(string followingId)
+        {
+            AppUser? user = await GetCurrentUserAsync();
+            if(user is not null)
+            {
+                Follow follow = await followReadRepository.GetAsync(
+                    predicate: f => f.FollowerId == user.Id && f.FollowingId == followingId,
+                    enableTracking: true);
+                followWriteRepository.Remove(follow);
+                await followWriteRepository.SaveAsync();
+            }
+        }
+
+        public async Task<IList<GetUserDTO>> GetFollowersAsync(string userId)
+        {
+            IList<AppUser> followers = followReadRepository
+                .GetAll(f => f.FollowingId == userId)
+                .Select(f => f.Follower)
+                .ToList();
+
+            return mapper.Map<ICollection<AppUser>, IList<GetUserDTO>>(followers);
+        }
+
+        public async Task<IList<GetUserDTO>> GetFollowingAsync(string userId)
+        {
+            IList<AppUser> following = followReadRepository
+                .GetAll(f => f.FollowerId == userId)
+                .Select(f => f.Following)
+                .ToList();
+
+            return mapper.Map<IList<AppUser>, IList<GetUserDTO>>(following);
         }
     }
 }
