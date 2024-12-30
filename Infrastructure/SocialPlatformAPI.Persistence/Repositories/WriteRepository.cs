@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SocialPlatformAPI.Application.Repositories;
-using SocialPlatformAPI.Domain.Entities.Common;
 using SocialPlatformAPI.Persistence.Contexts;
 
 namespace SocialPlatformAPI.Persistence.Repositories
 {
-    public class WriteRepository<T>(SocialPlatformDbContext context) : IWriteRepository<T> where T : BaseEntity, new()
+    public class WriteRepository<T>(SocialPlatformDbContext context) : IWriteRepository<T> where T : class, new()
     {
         public DbSet<T> Table => context.Set<T>();
 

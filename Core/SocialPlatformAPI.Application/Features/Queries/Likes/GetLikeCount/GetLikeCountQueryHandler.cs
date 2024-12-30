@@ -7,7 +7,7 @@ namespace SocialPlatformAPI.Application.Features.Queries.Likes.GetLikeCount
     {
         public async Task<GetLikeCountQueryResponse> Handle(GetLikeCountQueryRequest request, CancellationToken cancellationToken)
         {
-            int count = await likeService.GetLikeCountAsync(request.PostId);
+            int count = await likeService.GetPostLikeCountAsync(request.PostId);
             return new() { Count = count };
         }
     }

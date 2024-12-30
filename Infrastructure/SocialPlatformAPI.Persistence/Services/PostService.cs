@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SocialPlatformAPI.Application.DTOs;
 using SocialPlatformAPI.Application.DTOs.Posts;

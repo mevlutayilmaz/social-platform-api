@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace SocialPlatformAPI.Persistence.Repositories
 {
-    public class ReadRepository<T>(SocialPlatformDbContext context) : IReadRepository<T> where T : BaseEntity, new()
+    public class ReadRepository<T>(SocialPlatformDbContext context) : IReadRepository<T> where T : class, new()
     {
         public DbSet<T> Table => context.Set<T>();
 
@@ -47,12 +47,7 @@ namespace SocialPlatformAPI.Persistence.Repositories
             return await query.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<T> GetByIdAsync(string id, bool enableTracking = false)
-        {
-            var query = Table.AsQueryable();
-            if (!enableTracking) query = query.AsNoTracking();
-            return await query.FirstOrDefaultAsync(p => p.Id == Guid.Parse(id));
-        }
+        
 
         public async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null)
         {

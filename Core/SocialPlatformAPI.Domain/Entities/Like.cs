@@ -1,13 +1,12 @@
-﻿using SocialPlatformAPI.Domain.Entities.Common;
-using SocialPlatformAPI.Domain.Entities.Identity;
+﻿using SocialPlatformAPI.Domain.Entities.Identity;
 
 namespace SocialPlatformAPI.Domain.Entities
 {
-    public class Like : BaseEntity
+    public class Like
     {
-        public Guid PostId { get; set; }
+        public Guid Id { get; set; }
         public string UserId { get; set; }
-        public Post Post { get; set; }
+        public DateTime CreatedDate { get; set; }
         public AppUser User { get; set; }
     }
 }

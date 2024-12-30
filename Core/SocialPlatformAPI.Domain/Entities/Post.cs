@@ -12,6 +12,6 @@ namespace SocialPlatformAPI.Domain.Entities
         public AppUser User { get; set; }
 
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
-        public ICollection<Like> Likes { get; set; } = new HashSet<Like>();
+        public ICollection<PostLike> Likes { get; set; } = new HashSet<PostLike>();
     }
 }

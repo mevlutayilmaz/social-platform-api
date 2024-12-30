@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
-using SocialPlatformAPI.Domain.Entities.Common;
 using System.Linq.Expressions;
 
 namespace SocialPlatformAPI.Application.Repositories
 {
-    public interface IReadRepository<T> : IRepository<T> where T : BaseEntity, new()
+    public interface IReadRepository<T> : IRepository<T> where T : class, new()
     {
         Task<IList<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
@@ -17,7 +16,6 @@ namespace SocialPlatformAPI.Application.Repositories
         Task<T> GetAsync(Expression<Func<T, bool>> predicate,
             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
             bool enableTracking = false);
-        Task<T> GetByIdAsync(string id, bool enableTracking = false);
         Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null);
     }
 }

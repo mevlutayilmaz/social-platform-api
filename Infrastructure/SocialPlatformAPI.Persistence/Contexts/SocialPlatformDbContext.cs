@@ -12,12 +12,17 @@ namespace SocialPlatformAPI.Persistence.Contexts
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Like> Likes { get; set; }
         public DbSet<Follow> Follows { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<CommentLike> CommentLikes { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Follow>()
+                .HasKey(f => new { f.FollowingId, f.FollowerId });
 
             builder.Entity<Follow>()
                 .HasOne(f => f.Follower)
@@ -29,8 +34,12 @@ namespace SocialPlatformAPI.Persistence.Contexts
                 .WithMany(u => u.Following)
                 .HasForeignKey(f => f.FollowingId);
 
-            builder.Entity<Like>()
-                .HasIndex(l => new { l.UserId, l.PostId })
+            builder.Entity<CommentLike>()
+                .HasIndex(cl => new { cl.UserId, cl.CommentId })
+                .IsUnique();
+
+            builder.Entity<PostLike>()
+                .HasIndex(pl => new { pl.UserId, pl.PostId })
                 .IsUnique();
 
         }
