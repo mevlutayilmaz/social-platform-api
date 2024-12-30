@@ -2,7 +2,7 @@
 
 namespace SocialPlatformAPI.Application.Features.Queries.Likes.GetLikeCount
 {
-    public class GetLikeCountQueryRequest : IRequest<GetLikeCountQueryResponse>
+    public class GetPostLikeCountQueryRequest : IRequest<GetPostLikeCountQueryResponse>
     {
         public string PostId { get; set; }
     }

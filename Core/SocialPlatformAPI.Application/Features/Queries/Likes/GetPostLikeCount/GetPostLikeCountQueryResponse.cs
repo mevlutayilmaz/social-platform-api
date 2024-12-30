@@ -1,6 +1,6 @@
 ﻿namespace SocialPlatformAPI.Application.Features.Queries.Likes.GetLikeCount
 {
-    public class GetLikeCountQueryResponse
+    public class GetPostLikeCountQueryResponse
     {
         public int Count { get; set; }
     }
