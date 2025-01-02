@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SocialPlatformAPI.API.Extensions;
 using SocialPlatformAPI.Application;
 using SocialPlatformAPI.Infrastructure;
 using SocialPlatformAPI.Infrastructure.Services.Storage.Azure;
@@ -52,6 +53,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.ConfigureExceptionHandler();
 
 app.UseCors();
 app.UseHttpsRedirection();

@@ -10,6 +10,7 @@ namespace SocialPlatformAPI.Application.Features.Queries.Posts.GetAllPosts
     {
         public async Task<IList<GetAllPostsQueryResponse>> Handle(GetAllPostsQueryRequest request, CancellationToken cancellationToken)
         {
+            throw new NullReferenceException("wegds");
             var posts = await postService.GetAllPostsAsync(new() { PageCount = request.PageCount, ItemCount = request.ItemCount });
             return mapper.Map<IList<GetPostDTO>, IList <GetAllPostsQueryResponse>>(posts);
         }

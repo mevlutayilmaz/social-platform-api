@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using SocialPlatformAPI.Application.Beheviors;
 using System.Reflection;
 
 namespace SocialPlatformAPI.Application
@@ -9,6 +12,10 @@ namespace SocialPlatformAPI.Application
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FluentValidationBehevior<,>));
         }
     }
 }
