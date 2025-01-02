@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using System.Net;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics;
+using SendGrid.Helpers.Errors.Model;
 using System.Net.Mime;
 
 namespace SocialPlatformAPI.API.Extensions
@@ -12,17 +13,24 @@ namespace SocialPlatformAPI.API.Extensions
             {
                 builder.Run(async context =>
                 {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = MediaTypeNames.Application.Json;
-
                     IExceptionHandlerFeature? contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if(contextFeature != null)
                     {
+                        context.Response.StatusCode = contextFeature.Error switch
+                        {
+                            BadRequestException => StatusCodes.Status400BadRequest,
+                            NotFoundException => StatusCodes.Status404NotFound,
+                            ValidationException => StatusCodes.Status422UnprocessableEntity,
+                            UnauthorizedException => StatusCodes.Status401Unauthorized,
+                            ForbiddenException => StatusCodes.Status403Forbidden,
+                            _ => StatusCodes.Status500InternalServerError
+                        };
+                        context.Response.ContentType = MediaTypeNames.Application.Json;
+
                         await context.Response.WriteAsJsonAsync(new
                         {
-                            StatusCode = context.Response.StatusCode,
-                            Message = contextFeature.Error.Message,
-                            Title = contextFeature.Error.GetType().Name
+                            Title = contextFeature.Error.GetType().Name,
+                            Message = contextFeature.Error.Message
                         });
                     }
                 });

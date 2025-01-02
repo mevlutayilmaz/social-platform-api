@@ -9,6 +9,7 @@ using SocialPlatformAPI.Application.Features.Commands.Auth.RefreshTokenLogin;
 using SocialPlatformAPI.Application.Features.Commands.Posts.CreatePost;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowers;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowing;
+using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetUserByUsername;
 using SocialPlatformAPI.Application.Features.Queries.Comments.GetComments;
 using SocialPlatformAPI.Application.Features.Queries.Posts.GetAllPosts;
 using SocialPlatformAPI.Application.Features.Queries.Posts.GetPostById;
@@ -34,6 +35,9 @@ namespace SocialPlatformAPI.Application.Mapping
             CreateMap<GetFollowingQueryResponse, GetUserDTO>().ReverseMap();
             CreateMap<CreateUserDTO, CreateUserCommandRequest>().ReverseMap();
             CreateMap<CreateUserResponseDTO, CreateUserCommandResponse>().ReverseMap();
+            CreateMap<GetUserByUsernameDTO, GetUserByUsernameQueryResponse>().ReverseMap();
+            CreateMap<GetUserByUsernameDTO, AppUser>().ReverseMap();
+
 
             CreateMap<TokenDTO, LoginCommandResponse>().ReverseMap();
             CreateMap<TokenDTO, RefreshTokenLoginCommandResponse>().ReverseMap();

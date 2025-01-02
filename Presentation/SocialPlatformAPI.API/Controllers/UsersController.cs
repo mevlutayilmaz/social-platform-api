@@ -6,6 +6,7 @@ using SocialPlatformAPI.Application.Features.Commands.AppUsers.FollowUser;
 using SocialPlatformAPI.Application.Features.Commands.AppUsers.UnfollowUser;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowers;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowing;
+using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetUserByUsername;
 
 namespace SocialPlatformAPI.API.Controllers
 {
@@ -49,6 +50,14 @@ namespace SocialPlatformAPI.API.Controllers
         public async Task<IActionResult> GetFollowers([FromQuery] GetFollowersQueryRequest request)
         {
             IList<GetFollowersQueryResponse> response = await mediator.Send(request);
+            return Ok(response);
+        }
+        
+        [Authorize]
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetUserByUsername([FromQuery] GetUserByUsernameQueryRequest request)
+        {
+            GetUserByUsernameQueryResponse response = await mediator.Send(request);
             return Ok(response);
         }
     }

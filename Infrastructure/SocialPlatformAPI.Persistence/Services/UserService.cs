@@ -26,6 +26,15 @@ namespace SocialPlatformAPI.Persistence.Services
             return null;
         }
 
+        public async Task<GetUserByUsernameDTO> GetUserByUsernameAsync(string username)
+        {
+            AppUser? user = await userManager.FindByNameAsync(username);
+
+            if(user is not null)
+                return mapper.Map<AppUser, GetUserByUsernameDTO>(user);
+            throw new Exception("User not found!");
+        }
+
         public async Task<CreateUserResponseDTO> CreateAsync(CreateUserDTO user)
         {
             IdentityResult result = await userManager.CreateAsync(new()

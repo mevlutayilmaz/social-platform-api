@@ -7,6 +7,7 @@ namespace SocialPlatformAPI.Application.Interfaces.Services
     {
         public string? GetCurrentUsername { get; }
         Task<AppUser?> GetCurrentUserAsync();
+        Task<GetUserByUsernameDTO> GetUserByUsernameAsync(string username);
         Task<CreateUserResponseDTO> CreateAsync(CreateUserDTO user);
         Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenDate, int addOnAccessTokenDate);
         Task FollowUserAsync(string followingId);
