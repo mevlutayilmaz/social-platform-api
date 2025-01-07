@@ -45,5 +45,7 @@ namespace SocialPlatformAPI.Persistence.Services
             }
             throw new Exception("User not found!");
         }
+
+        public async Task LogoutAsync() => await signInManager.SignOutAsync();
     }
 }

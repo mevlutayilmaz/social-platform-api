@@ -30,7 +30,9 @@ namespace SocialPlatformAPI.API.Extensions
                         await context.Response.WriteAsJsonAsync(new
                         {
                             Title = contextFeature.Error.GetType().Name,
-                            Message = contextFeature.Error.Message
+                            Errors = contextFeature.Error is ValidationException validationException
+                                ? validationException.Errors.Select(e => e.ErrorMessage).ToList()
+                                : new List<string>() { contextFeature.Error.Message }
                         });
                     }
                 });
