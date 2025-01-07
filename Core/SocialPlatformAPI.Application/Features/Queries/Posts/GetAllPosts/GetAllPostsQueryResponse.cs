@@ -8,6 +8,7 @@ namespace SocialPlatformAPI.Application.Features.Queries.Posts.GetAllPosts
         public string Content { get; set; }
         public string? MediaUrl { get; set; }
         public int LikeCount { get; set; }
+        public DateTime CreatedDate { get; set; }
         public GetUserDTO User { get; set; }
     }
 }
