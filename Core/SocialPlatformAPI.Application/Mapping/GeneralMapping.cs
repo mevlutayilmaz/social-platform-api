@@ -25,7 +25,6 @@ namespace SocialPlatformAPI.Application.Mapping
         public GeneralMapping()
         {
             CreateMap<GetPostDTO, GetAllPostsQueryResponse>().ReverseMap();
-            CreateMap<CreatePostDTO, CreatePostCommandRequest>().ReverseMap();
             CreateMap<GetPostDTO, GetPostByIdQueryResponse>().ReverseMap();
             CreateMap<CreatePostDTO, Post>().ReverseMap();
             CreateMap<GetPostDTO, Post>();

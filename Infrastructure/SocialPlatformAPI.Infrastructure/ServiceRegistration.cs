@@ -10,6 +10,7 @@ namespace SocialPlatformAPI.Infrastructure
     {
         public static void AddInfrastructureService(this IServiceCollection services)
         {
+            services.AddScoped<IStorageService, StorageService>();
             services.AddScoped<ITokenService, TokenService>();
         }
 

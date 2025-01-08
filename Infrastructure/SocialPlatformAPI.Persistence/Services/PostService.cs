@@ -37,6 +37,7 @@ namespace SocialPlatformAPI.Persistence.Services
         {
             var posts = await postReadRepository.GetAllByPagingAsync(
                 include: x => x.Include(p => p.User).Include(p => p.Likes),
+                orderBy: x => x.OrderByDescending(p => p.CreatedDate),
                 pageCount: pagination.PageCount,
                 itemCount: pagination.ItemCount);
             return mapper.Map<IList<Post>, IList<GetPostDTO>>(posts);

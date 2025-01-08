@@ -9,7 +9,7 @@ namespace SocialPlatformAPI.Infrastructure.Services.Storage
         {
             string _newFileName = await Task.Run<string>(async () =>
             {
-                string extension = Path.GetExtension(pathOrContainerName);
+                string extension = Path.GetExtension(fileName);
                 string newFileName = string.Empty;
 
                 if (first)

@@ -32,7 +32,9 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task<IList<GetStoriesDTO>> GetStoriesAsync()
         {
-            var stories = await storyReadRepository.GetAllAsync(include: x => x.Include(s => s.User));
+            var stories = await storyReadRepository.GetAllAsync(
+                include: x => x.Include(s => s.User),
+                orderBy: x => x.OrderByDescending(s => s.CreatedDate));
             return mapper.Map<IList<Story>, IList<GetStoriesDTO>>(stories);
         }
     }

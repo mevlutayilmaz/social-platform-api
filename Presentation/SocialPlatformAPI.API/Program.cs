@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using SocialPlatformAPI.API.Extensions;
 using SocialPlatformAPI.Application;
 using SocialPlatformAPI.Infrastructure;
-using SocialPlatformAPI.Infrastructure.Services.Storage.Azure;
+using SocialPlatformAPI.Infrastructure.Services.Storage.Locale;
 using SocialPlatformAPI.Persistence;
 using System.Security.Claims;
 using System.Text;
@@ -17,7 +17,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddInfrastructureService();
 builder.Services.AddApplicationService();
-builder.Services.AddStorage<AzureStorage>();
+builder.Services.AddStorage<LocaleStorage>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -56,6 +56,7 @@ if (app.Environment.IsDevelopment())
 
 app.ConfigureExceptionHandler();
 
+app.UseStaticFiles();
 app.UseCors();
 app.UseHttpsRedirection();
 
