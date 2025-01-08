@@ -11,6 +11,7 @@ namespace SocialPlatformAPI.Persistence.Contexts
         public SocialPlatformDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Story> Stories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Follow> Follows { get; set; }
         public DbSet<Like> Likes { get; set; }

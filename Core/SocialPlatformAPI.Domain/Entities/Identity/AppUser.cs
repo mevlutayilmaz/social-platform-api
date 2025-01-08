@@ -10,7 +10,8 @@ namespace SocialPlatformAPI.Domain.Entities.Identity
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenEndDate { get; set; }
 
-        public ICollection<Post> Posts { get; set; }
+        public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+        public ICollection<Story> Stories { get; set; } = new HashSet<Story>();
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
         public ICollection<Like> Likes { get; set; } = new HashSet<Like>();
         public ICollection<Follow> Followers { get; set; } = new HashSet<Follow>();

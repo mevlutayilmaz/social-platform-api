@@ -28,7 +28,7 @@ namespace SocialPlatformAPI.API.Controllers
         }
         
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreatePost(CreatePostCommandRequest request)
+        public async Task<IActionResult> CreatePost([FromForm] CreatePostCommandRequest request)
         {
             CreatePostCommandResponse response = await mediator.Send(request);
             return Ok(response);

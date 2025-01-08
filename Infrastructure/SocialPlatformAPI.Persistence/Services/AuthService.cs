@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SocialPlatformAPI.Application.DTOs;
+using SocialPlatformAPI.Application.DTOs.Users;
 using SocialPlatformAPI.Application.Interfaces.Services;
 using SocialPlatformAPI.Application.Interfaces.Tokens;
 using SocialPlatformAPI.Domain.Entities.Identity;
@@ -10,9 +12,10 @@ namespace SocialPlatformAPI.Persistence.Services
     public class AuthService(SignInManager<AppUser> signInManager,
         UserManager<AppUser> userManager,
         ITokenService tokenService,
-        IUserService userService) : IAuthService
+        IUserService userService,
+        IMapper mapper) : IAuthService
     {
-        public async Task<TokenDTO> LoginAsync(string usernameOrEmail, string password, int accessTokenLifeTime)
+        public async Task<(TokenDTO, GetUserDTO)> LoginAsync(string usernameOrEmail, string password, int accessTokenLifeTime)
         {
             AppUser user = await userManager.FindByEmailAsync(usernameOrEmail);
             if (user is null)
@@ -27,7 +30,7 @@ namespace SocialPlatformAPI.Persistence.Services
                 TokenDTO token = tokenService.CreateAccessToken(accessTokenLifeTime, user);
                 await userService.UpdateRefreshToken(token.RefreshToken,user, token.Expiration, 24);
 
-                return token;
+                return (token, mapper.Map<AppUser, GetUserDTO>(user));
             }
             throw new Exception("Authentication error!");
         }

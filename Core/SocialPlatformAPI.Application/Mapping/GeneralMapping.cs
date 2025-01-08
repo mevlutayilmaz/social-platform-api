@@ -2,6 +2,7 @@
 using SocialPlatformAPI.Application.DTOs;
 using SocialPlatformAPI.Application.DTOs.Comments;
 using SocialPlatformAPI.Application.DTOs.Posts;
+using SocialPlatformAPI.Application.DTOs.Stories;
 using SocialPlatformAPI.Application.DTOs.Users;
 using SocialPlatformAPI.Application.Features.Commands.AppUsers.CreateUser;
 using SocialPlatformAPI.Application.Features.Commands.Auth.Login;
@@ -13,6 +14,7 @@ using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetUserByUsername;
 using SocialPlatformAPI.Application.Features.Queries.Comments.GetComments;
 using SocialPlatformAPI.Application.Features.Queries.Posts.GetAllPosts;
 using SocialPlatformAPI.Application.Features.Queries.Posts.GetPostById;
+using SocialPlatformAPI.Application.Features.Queries.Stories.GetStories;
 using SocialPlatformAPI.Domain.Entities;
 using SocialPlatformAPI.Domain.Entities.Identity;
 
@@ -29,6 +31,9 @@ namespace SocialPlatformAPI.Application.Mapping
             CreateMap<GetPostDTO, Post>();
             CreateMap<Post, GetPostDTO>().ForMember(dest => dest.LikeCount, options => options.MapFrom(src => src.Likes.Count));
 
+            CreateMap<GetStoriesDTO, Story>().ReverseMap();
+            CreateMap<GetStoriesDTO, GetStoriesQueryResponse>().ReverseMap();
+
             CreateMap<AppUser, CreateUserCommandRequest>().ReverseMap();
             CreateMap<AppUser, GetUserDTO>().ReverseMap();
             CreateMap<GetFollowersQueryResponse, GetUserDTO>().ReverseMap();
@@ -38,8 +43,6 @@ namespace SocialPlatformAPI.Application.Mapping
             CreateMap<GetUserByUsernameDTO, GetUserByUsernameQueryResponse>().ReverseMap();
             CreateMap<GetUserByUsernameDTO, AppUser>().ReverseMap();
 
-
-            CreateMap<TokenDTO, LoginCommandResponse>().ReverseMap();
             CreateMap<TokenDTO, RefreshTokenLoginCommandResponse>().ReverseMap();
 
             CreateMap<GetCommentDTO, Comment>();

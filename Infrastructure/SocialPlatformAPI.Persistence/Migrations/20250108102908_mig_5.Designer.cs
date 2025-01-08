@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SocialPlatformAPI.Persistence.Contexts;
@@ -11,9 +12,11 @@ using SocialPlatformAPI.Persistence.Contexts;
 namespace SocialPlatformAPI.Persistence.Migrations
 {
     [DbContext(typeof(SocialPlatformDbContext))]
-    partial class SocialPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250108102908_mig_5")]
+    partial class mig_5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -359,13 +362,15 @@ namespace SocialPlatformAPI.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("UserId1")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Stories");
                 });
@@ -515,9 +520,7 @@ namespace SocialPlatformAPI.Persistence.Migrations
                 {
                     b.HasOne("SocialPlatformAPI.Domain.Entities.Identity.AppUser", "User")
                         .WithMany("Stories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
