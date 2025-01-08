@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SocialPlatformAPI.Application.DTOs;
 using SocialPlatformAPI.Application.DTOs.Posts;
+using SocialPlatformAPI.Application.DTOs.Users;
 using SocialPlatformAPI.Application.Interfaces.Services;
 using SocialPlatformAPI.Application.Repositories;
 using SocialPlatformAPI.Domain.Entities;
@@ -35,12 +36,24 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task<IList<GetPostDTO>> GetAllPostsAsync(Pagination pagination)
         {
-            var posts = await postReadRepository.GetAllByPagingAsync(
-                include: x => x.Include(p => p.User).Include(p => p.Likes),
-                orderBy: x => x.OrderByDescending(p => p.CreatedDate),
-                pageCount: pagination.PageCount,
-                itemCount: pagination.ItemCount);
-            return mapper.Map<IList<Post>, IList<GetPostDTO>>(posts);
+            AppUser user = await userService.GetCurrentUserAsync();
+
+            return await postReadRepository.Table
+                .Include(p => p.User)
+                .Include(p => p.Likes)
+                .OrderByDescending(p => p.CreatedDate)
+                .Skip(pagination.ItemCount * (pagination.PageCount - 1))
+                .Take(pagination.ItemCount)
+                .Select(p => new GetPostDTO
+                {
+                    Id = p.Id.ToString(),
+                    Content = p.Content,
+                    CreatedDate = p.CreatedDate,
+                    MediaUrl = p.MediaUrl,
+                    LikeCount = p.Likes.Count,
+                    IsLiked = p.Likes.Any(l => l.UserId == user.Id),
+                    User = mapper.Map<AppUser, GetUserDTO>(p.User)
+                }).ToListAsync();
         }
 
         public async Task<GetPostDTO> GetPostByIdAsync(string postId)

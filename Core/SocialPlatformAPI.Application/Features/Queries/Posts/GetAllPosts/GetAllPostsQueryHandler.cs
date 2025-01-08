@@ -5,7 +5,7 @@ using SocialPlatformAPI.Application.Interfaces.Services;
 
 namespace SocialPlatformAPI.Application.Features.Queries.Posts.GetAllPosts
 {
-    public class GetAllPostsQueryHandler(IPostService postService, IMapper mapper) : IRequestHandler<GetAllPostsQueryRequest, IList<GetAllPostsQueryResponse>>
+    public class GetAllPostsQueryHandler(IPostService postService, ILikeService likeService, IMapper mapper) : IRequestHandler<GetAllPostsQueryRequest, IList<GetAllPostsQueryResponse>>
     {
         public async Task<IList<GetAllPostsQueryResponse>> Handle(GetAllPostsQueryRequest request, CancellationToken cancellationToken)
         {

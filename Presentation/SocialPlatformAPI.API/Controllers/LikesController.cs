@@ -44,7 +44,7 @@ namespace SocialPlatformAPI.API.Controllers
         }
         
         [HttpDelete("[action]")]
-        public async Task<IActionResult> UndoLikePost(UndoLikePostCommandRequest request)
+        public async Task<IActionResult> UndoLikePost([FromQuery] UndoLikePostCommandRequest request)
         {
             UndoLikePostCommandResponse response = await mediator.Send(request);
             return Ok(response);

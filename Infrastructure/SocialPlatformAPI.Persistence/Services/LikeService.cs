@@ -1,4 +1,5 @@
-﻿using SocialPlatformAPI.Application.Interfaces.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialPlatformAPI.Application.Interfaces.Services;
 using SocialPlatformAPI.Application.Repositories;
 using SocialPlatformAPI.Domain.Entities;
 using SocialPlatformAPI.Domain.Entities.Identity;
@@ -18,6 +19,16 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task<int> GetPostLikeCountAsync(string postId)
             => await postLikeReadRepository.CountAsync(l => l.PostId == Guid.Parse(postId));
+
+        public async Task<bool> IsPostLikedAsync(string postId)
+        {
+            AppUser? user = await userService.GetCurrentUserAsync();
+            if (user is not null)
+            {
+                return await postLikeReadRepository.Table.AnyAsync(pl => pl.PostId == Guid.Parse(postId) && pl.UserId == user.Id);
+            }
+            return false;
+        }
 
         public async Task LikeCommentAsync(string commentId)
         {
