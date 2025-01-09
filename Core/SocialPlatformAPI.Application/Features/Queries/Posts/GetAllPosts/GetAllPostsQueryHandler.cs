@@ -9,7 +9,7 @@ namespace SocialPlatformAPI.Application.Features.Queries.Posts.GetAllPosts
     {
         public async Task<IList<GetAllPostsQueryResponse>> Handle(GetAllPostsQueryRequest request, CancellationToken cancellationToken)
         {
-            var posts = await postService.GetAllPostsAsync(new() { PageCount = request.PageCount, ItemCount = request.ItemCount });
+            var posts = await postService.GetAllPostsAsync(new() { PageCount = request.PageCount, ItemCount = request.ItemCount }, request.Username);
             return mapper.Map<IList<GetPostDTO>, IList <GetAllPostsQueryResponse>>(posts);
         }
     }

@@ -5,6 +5,7 @@ using SocialPlatformAPI.Application.DTOs.Posts;
 using SocialPlatformAPI.Application.DTOs.Stories;
 using SocialPlatformAPI.Application.DTOs.Users;
 using SocialPlatformAPI.Application.Features.Commands.AppUsers.CreateUser;
+using SocialPlatformAPI.Application.Features.Commands.AppUsers.UpdateUser;
 using SocialPlatformAPI.Application.Features.Commands.Auth.RefreshTokenLogin;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowers;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowing;
@@ -42,6 +43,8 @@ namespace SocialPlatformAPI.Application.Mapping
             CreateMap<AppUser, GetUserByUsernameDTO>()
                 .ForMember(dest => dest.Follower, options => options.MapFrom(src => src.Followers.Count))
                 .ForMember(dest => dest.Following, options => options.MapFrom(src => src.Following.Count));
+            CreateMap<UpdateUserDTO, AppUser>().ReverseMap();
+            CreateMap<UpdateUserDTO, UpdateUserCommandRequest>().ReverseMap();
 
             CreateMap<TokenDTO, RefreshTokenLoginCommandResponse>().ReverseMap();
 

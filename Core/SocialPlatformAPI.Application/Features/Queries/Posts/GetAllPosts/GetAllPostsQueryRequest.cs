@@ -6,5 +6,6 @@ namespace SocialPlatformAPI.Application.Features.Queries.Posts.GetAllPosts
     {
         public int PageCount { get; set; } = 1;
         public int ItemCount { get; set; } = 5;
+        public string? Username { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace SocialPlatformAPI.Application.Interfaces.Services
         Task<AppUser?> GetCurrentUserAsync();
         Task<GetUserByUsernameDTO> GetUserByUsernameAsync(string username);
         Task<CreateUserResponseDTO> CreateAsync(CreateUserDTO user);
+        Task UpdateUserAsync(UpdateUserDTO user);
         Task UpdateUserProfilePicAsync(string profilePic);
         Task UpdateUserCoverPicAsync(string coverPic);
         Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenDate, int addOnAccessTokenDate);

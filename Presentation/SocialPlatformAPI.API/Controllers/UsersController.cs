@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialPlatformAPI.Application.Features.Commands.AppUsers.CreateUser;
 using SocialPlatformAPI.Application.Features.Commands.AppUsers.FollowUser;
 using SocialPlatformAPI.Application.Features.Commands.AppUsers.UnfollowUser;
+using SocialPlatformAPI.Application.Features.Commands.AppUsers.UpdateUser;
 using SocialPlatformAPI.Application.Features.Commands.AppUsers.UploadCoverPic;
 using SocialPlatformAPI.Application.Features.Commands.AppUsers.UploadProfilePic;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowers;
@@ -34,6 +35,13 @@ namespace SocialPlatformAPI.API.Controllers
         public async Task<IActionResult> UploadCoverPic([FromForm] UploadCoverPicCommandRequest request)
         {
             UploadCoverPicCommandResponse response = await mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpPut("[action]")]
+        public async Task<IActionResult> UpdateUser(UpdateUserCommandRequest request)
+        {
+            UpdateUserCommandResponse response = await mediator.Send(request);
             return Ok(response);
         }
 

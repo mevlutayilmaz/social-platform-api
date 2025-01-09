@@ -5,7 +5,7 @@ namespace SocialPlatformAPI.Application.Interfaces.Services
 {
     public interface IPostService
     {
-        Task<IList<GetPostDTO>> GetAllPostsAsync(Pagination pagination);
+        Task<IList<GetPostDTO>> GetAllPostsAsync(Pagination pagination, string? username = null);
         Task<GetPostDTO> GetPostByIdAsync(string postId);
         Task CreatePostAsync(CreatePostDTO post);
         Task DeletePostAsync(string postId);

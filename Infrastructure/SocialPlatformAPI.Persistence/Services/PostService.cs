@@ -34,26 +34,32 @@ namespace SocialPlatformAPI.Persistence.Services
             await postWriteRepository.SaveAsync();
         }
 
-        public async Task<IList<GetPostDTO>> GetAllPostsAsync(Pagination pagination)
+        public async Task<IList<GetPostDTO>> GetAllPostsAsync(Pagination pagination, string? username = null)
         {
-            AppUser user = await userService.GetCurrentUserAsync();
+            AppUser? user = await userService.GetCurrentUserAsync();
 
-            return await postReadRepository.Table
-                .Include(p => p.User)
-                .Include(p => p.Likes)
-                .OrderByDescending(p => p.CreatedDate)
-                .Skip(pagination.ItemCount * (pagination.PageCount - 1))
-                .Take(pagination.ItemCount)
-                .Select(p => new GetPostDTO
-                {
-                    Id = p.Id.ToString(),
-                    Content = p.Content,
-                    CreatedDate = p.CreatedDate,
-                    MediaUrl = p.MediaUrl,
-                    LikeCount = p.Likes.Count,
-                    IsLiked = p.Likes.Any(l => l.UserId == user.Id),
-                    User = mapper.Map<AppUser, GetUserDTO>(p.User)
-                }).ToListAsync();
+            if (user is not null)
+            {
+                var query = postReadRepository.Table.AsQueryable().AsNoTracking();
+                if (!string.IsNullOrEmpty(username)) query = query.Where(p => p.User.UserName == username);
+                return await query.Include(p => p.User)
+                    .Include(p => p.User)
+                    .Include(p => p.Likes)
+                    .OrderByDescending(p => p.CreatedDate)
+                    .Skip(pagination.ItemCount * (pagination.PageCount - 1))
+                    .Take(pagination.ItemCount)
+                    .Select(p => new GetPostDTO
+                    {
+                        Id = p.Id.ToString(),
+                        Content = p.Content,
+                        CreatedDate = p.CreatedDate,
+                        MediaUrl = p.MediaUrl,
+                        LikeCount = p.Likes.Count,
+                        IsLiked = p.Likes.Any(l => l.UserId == user.Id),
+                        User = mapper.Map<AppUser, GetUserDTO>(p.User)
+                    }).ToListAsync();
+            }
+            throw new Exception("User not found!");
         }
 
         public async Task<GetPostDTO> GetPostByIdAsync(string postId)

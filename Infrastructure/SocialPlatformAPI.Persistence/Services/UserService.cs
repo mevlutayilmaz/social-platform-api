@@ -146,5 +146,15 @@ namespace SocialPlatformAPI.Persistence.Services
                 await userManager.UpdateAsync(user);
             }
         }
+
+        public async Task UpdateUserAsync(UpdateUserDTO user)
+        {
+            AppUser? currentUser = await GetCurrentUserAsync();
+            if (currentUser is not null)
+            {
+                mapper.Map(user, currentUser);
+                IdentityResult result = await userManager.UpdateAsync(currentUser);
+            }
+        }
     }
 }
