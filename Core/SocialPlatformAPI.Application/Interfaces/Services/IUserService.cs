@@ -9,9 +9,11 @@ namespace SocialPlatformAPI.Application.Interfaces.Services
         Task<AppUser?> GetCurrentUserAsync();
         Task<GetUserByUsernameDTO> GetUserByUsernameAsync(string username);
         Task<CreateUserResponseDTO> CreateAsync(CreateUserDTO user);
+        Task UpdateUserProfilePicAsync(string profilePic);
+        Task UpdateUserCoverPicAsync(string coverPic);
         Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenDate, int addOnAccessTokenDate);
-        Task FollowUserAsync(string followingId);
-        Task UnfollowUserAsync(string followingId);
+        Task FollowUserAsync(string username);
+        Task UnfollowUserAsync(string username);
         Task<IList<GetUserDTO>> GetFollowersAsync(string userId);
         Task<IList<GetUserDTO>> GetFollowingAsync(string userId);
     }

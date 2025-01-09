@@ -5,7 +5,9 @@ namespace SocialPlatformAPI.Domain.Entities.Identity
     public class AppUser : IdentityUser<string>
     {
         public string NameSurname { get; set; }
+        public string City { get; set; }
         public string? ProfilePicture { get; set; }
+        public string? CoverPicture { get; set; }
         public string? Bio { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenEndDate { get; set; }

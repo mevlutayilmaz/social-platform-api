@@ -28,10 +28,19 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task<GetUserByUsernameDTO> GetUserByUsernameAsync(string username)
         {
-            AppUser? user = await userManager.FindByNameAsync(username);
+            AppUser? user = await userManager.Users
+                .Include(u => u.Followers)
+                .Include(u => u.Following)
+                .FirstOrDefaultAsync(u => u.UserName == username);
 
-            if(user is not null)
-                return mapper.Map<AppUser, GetUserByUsernameDTO>(user);
+            AppUser? currentUser = await GetCurrentUserAsync();
+
+            if (user is not null && currentUser is not null)
+            {
+                GetUserByUsernameDTO dto = mapper.Map<AppUser, GetUserByUsernameDTO>(user);
+                dto.IsFollowed = user.Followers.Any(f => f.FollowerId == currentUser.Id);
+                return dto;
+            }
             throw new Exception("User not found!");
         }
 
@@ -68,28 +77,30 @@ namespace SocialPlatformAPI.Persistence.Services
                 throw new Exception("User not found!");
         }
 
-        public async Task FollowUserAsync(string followingId)
+        public async Task FollowUserAsync(string username)
         {
-            AppUser? user = await GetCurrentUserAsync();
-            if (user is not null)
+            AppUser? currentUser = await GetCurrentUserAsync();
+            AppUser? user = await userManager.FindByNameAsync(username);
+            if (currentUser is not null && user is not null)
             {
                 await followWriteRepository.AddAsync(new()
                 {
-                    FollowerId = user.Id,
-                    FollowingId = followingId,
+                    FollowerId = currentUser.Id,
+                    FollowingId = user.Id,
                     CreatedDate = DateTime.UtcNow
                 });
                 await followWriteRepository.SaveAsync();
             }
         }
 
-        public async Task UnfollowUserAsync(string followingId)
+        public async Task UnfollowUserAsync(string username)
         {
-            AppUser? user = await GetCurrentUserAsync();
-            if(user is not null)
+            AppUser? currentUser = await GetCurrentUserAsync();
+            AppUser? user = await userManager.FindByNameAsync(username);
+            if (currentUser is not null && user is not null)
             {
                 Follow follow = await followReadRepository.GetAsync(
-                    predicate: f => f.FollowerId == user.Id && f.FollowingId == followingId,
+                    predicate: f => f.FollowerId == currentUser.Id && f.FollowingId == user.Id,
                     enableTracking: true);
                 followWriteRepository.Remove(follow);
                 await followWriteRepository.SaveAsync();
@@ -114,6 +125,26 @@ namespace SocialPlatformAPI.Persistence.Services
                 .ToList();
 
             return mapper.Map<IList<AppUser>, IList<GetUserDTO>>(following);
+        }
+
+        public async Task UpdateUserProfilePicAsync(string profilePic)
+        {
+            AppUser? user = await GetCurrentUserAsync();
+            if(user is not null)
+            {
+                user.ProfilePicture = profilePic;
+                await userManager.UpdateAsync(user);
+            }
+        }
+
+        public async Task UpdateUserCoverPicAsync(string coverPic)
+        {
+            AppUser? user = await GetCurrentUserAsync();
+            if (user is not null)
+            {
+                user.CoverPicture = coverPic;
+                await userManager.UpdateAsync(user);
+            }
         }
     }
 }

@@ -215,8 +215,15 @@ namespace SocialPlatformAPI.Persistence.Migrations
                     b.Property<string>("Bio")
                         .HasColumnType("text");
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CoverPicture")
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
@@ -473,13 +480,13 @@ namespace SocialPlatformAPI.Persistence.Migrations
             modelBuilder.Entity("SocialPlatformAPI.Domain.Entities.Follow", b =>
                 {
                     b.HasOne("SocialPlatformAPI.Domain.Entities.Identity.AppUser", "Follower")
-                        .WithMany("Followers")
+                        .WithMany("Following")
                         .HasForeignKey("FollowerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SocialPlatformAPI.Domain.Entities.Identity.AppUser", "Following")
-                        .WithMany("Following")
+                        .WithMany("Followers")
                         .HasForeignKey("FollowingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

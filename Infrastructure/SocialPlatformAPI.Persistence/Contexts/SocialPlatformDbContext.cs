@@ -27,12 +27,12 @@ namespace SocialPlatformAPI.Persistence.Contexts
 
             builder.Entity<Follow>()
                 .HasOne(f => f.Follower)
-                .WithMany(u => u.Followers)
+                .WithMany(u => u.Following)
                 .HasForeignKey(f => f.FollowerId);
 
             builder.Entity<Follow>()
                 .HasOne(f => f.Following)
-                .WithMany(u => u.Following)
+                .WithMany(u => u.Followers)
                 .HasForeignKey(f => f.FollowingId);
 
             builder.Entity<CommentLike>()

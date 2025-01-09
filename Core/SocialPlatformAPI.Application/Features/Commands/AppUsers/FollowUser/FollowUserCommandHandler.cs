@@ -7,7 +7,7 @@ namespace SocialPlatformAPI.Application.Features.Commands.AppUsers.FollowUser
     {
         public async Task<FollowUserCommandResponse> Handle(FollowUserCommandRequest request, CancellationToken cancellationToken)
         {
-            await userService.FollowUserAsync(request.FollowingId);
+            await userService.FollowUserAsync(request.Username);
             return new();
         }
     }

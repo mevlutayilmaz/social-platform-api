@@ -38,7 +38,10 @@ namespace SocialPlatformAPI.Application.Mapping
             CreateMap<CreateUserDTO, CreateUserCommandRequest>().ReverseMap();
             CreateMap<CreateUserResponseDTO, CreateUserCommandResponse>().ReverseMap();
             CreateMap<GetUserByUsernameDTO, GetUserByUsernameQueryResponse>().ReverseMap();
-            CreateMap<GetUserByUsernameDTO, AppUser>().ReverseMap();
+            CreateMap<GetUserByUsernameDTO, AppUser>();
+            CreateMap<AppUser, GetUserByUsernameDTO>()
+                .ForMember(dest => dest.Follower, options => options.MapFrom(src => src.Followers.Count))
+                .ForMember(dest => dest.Following, options => options.MapFrom(src => src.Following.Count));
 
             CreateMap<TokenDTO, RefreshTokenLoginCommandResponse>().ReverseMap();
 

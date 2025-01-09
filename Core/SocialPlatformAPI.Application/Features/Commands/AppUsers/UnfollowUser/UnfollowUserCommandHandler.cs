@@ -7,7 +7,7 @@ namespace SocialPlatformAPI.Application.Features.Commands.AppUsers.UnfollowUser
     {
         public async Task<UnfollowUserCommandResponse> Handle(UnfollowUserCommandRequest request, CancellationToken cancellationToken)
         {
-            await userService.UnfollowUserAsync(request.FollowingId);
+            await userService.UnfollowUserAsync(request.Username);
             return new();
         }
     }
