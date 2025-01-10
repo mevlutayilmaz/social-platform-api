@@ -15,7 +15,8 @@ namespace SocialPlatformAPI.Application.Interfaces.Services
         Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenDate, int addOnAccessTokenDate);
         Task FollowUserAsync(string username);
         Task UnfollowUserAsync(string username);
-        Task<IList<GetUserDTO>> GetFollowersAsync(string userId);
-        Task<IList<GetUserDTO>> GetFollowingAsync(string userId);
+        Task<IList<GetUserDTO>> GetFollowersAsync(string username);
+        Task<IList<GetUserDTO>> GetFollowingAsync(string username);
+        Task<IList<GetUserDTO>> SuggestionsUserAsync();
     }
 }

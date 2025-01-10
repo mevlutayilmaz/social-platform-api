@@ -10,6 +10,7 @@ using SocialPlatformAPI.Application.Features.Commands.AppUsers.UploadProfilePic;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowers;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowing;
 using SocialPlatformAPI.Application.Features.Queries.AppUsers.GetUserByUsername;
+using SocialPlatformAPI.Application.Features.Queries.AppUsers.SuggestionsUser;
 
 namespace SocialPlatformAPI.API.Controllers
 {
@@ -82,6 +83,14 @@ namespace SocialPlatformAPI.API.Controllers
         public async Task<IActionResult> GetUserByUsername([FromQuery] GetUserByUsernameQueryRequest request)
         {
             GetUserByUsernameQueryResponse response = await mediator.Send(request);
+            return Ok(response);
+        }
+
+        [Authorize]
+        [HttpGet("[action]")]
+        public async Task<IActionResult> SuggestionsUser([FromQuery] SuggestionsUserQueryRequest request)
+        {
+            IList<SuggestionsUserQueryResponse> response = await mediator.Send(request);
             return Ok(response);
         }
     }

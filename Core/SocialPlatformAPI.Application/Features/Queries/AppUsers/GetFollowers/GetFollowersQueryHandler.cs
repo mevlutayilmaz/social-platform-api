@@ -9,7 +9,7 @@ namespace SocialPlatformAPI.Application.Features.Queries.AppUsers.GetFollowers
     {
         public async Task<IList<GetFollowersQueryResponse>> Handle(GetFollowersQueryRequest request, CancellationToken cancellationToken)
         {
-            IList<GetUserDTO> followers = await userService.GetFollowersAsync(request.UserId);
+            IList<GetUserDTO> followers = await userService.GetFollowersAsync(request.Username);
             return mapper.Map<IList<GetUserDTO>, IList<GetFollowersQueryResponse>>(followers);
         }
     }

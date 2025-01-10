@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SocialPlatformAPI.Application.DTOs.Comments;
+using SocialPlatformAPI.Application.DTOs.Users;
 using SocialPlatformAPI.Application.Interfaces.Services;
 using SocialPlatformAPI.Application.Repositories;
 using SocialPlatformAPI.Domain.Entities;
@@ -37,10 +38,26 @@ namespace SocialPlatformAPI.Persistence.Services
 
         public async Task<IList<GetCommentDTO>> GetCommentsAsync(string postId)
         {
-            IList<Comment> comments = await commentReadRepository.GetAllAsync(
-                include: x => x.Include(c => c.User).Include(c => c.Likes),
-                predicate: c => c.PostId == Guid.Parse(postId));
-            return mapper.Map<IList<Comment>, IList<GetCommentDTO>>(comments);
+            AppUser? user = await userService.GetCurrentUserAsync();
+
+            if (user is not null)
+            {
+                return await commentReadRepository.Table
+                    .Include(c => c.User)
+                    .Include(c => c.Likes)
+                    .OrderByDescending(c => c.CreatedDate)
+                    .Where(c => c.PostId == Guid.Parse(postId))
+                    .Select(c => new GetCommentDTO
+                    {
+                        Id = c.Id.ToString(),
+                        Content = c.Content,
+                        CreatedDate = c.CreatedDate,
+                        LikeCount = c.Likes.Count,
+                        IsLiked = c.Likes.Any(l => l.UserId == user.Id),
+                        User = mapper.Map<AppUser, GetUserDTO>(c.User)
+                    }).ToListAsync();
+            }
+            throw new Exception("User not found!");
         }
     }
 }

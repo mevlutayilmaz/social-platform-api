@@ -107,22 +107,22 @@ namespace SocialPlatformAPI.Persistence.Services
             }
         }
 
-        public async Task<IList<GetUserDTO>> GetFollowersAsync(string userId)
+        public async Task<IList<GetUserDTO>> GetFollowersAsync(string username)
         {
-            IList<AppUser> followers = followReadRepository
-                .GetAll(f => f.FollowingId == userId)
+            IList<AppUser> followers = await followReadRepository
+                .GetAll(f => f.Following.UserName == username, include: x => x.Include(f => f.Following))
                 .Select(f => f.Follower)
-                .ToList();
+                .ToListAsync();
 
             return mapper.Map<ICollection<AppUser>, IList<GetUserDTO>>(followers);
         }
 
-        public async Task<IList<GetUserDTO>> GetFollowingAsync(string userId)
+        public async Task<IList<GetUserDTO>> GetFollowingAsync(string username)
         {
-            IList<AppUser> following = followReadRepository
-                .GetAll(f => f.FollowerId == userId)
+            IList<AppUser> following = await followReadRepository
+                .GetAll(f => f.Follower.UserName == username, include: x => x.Include(f => f.Follower))
                 .Select(f => f.Following)
-                .ToList();
+                .ToListAsync();
 
             return mapper.Map<IList<AppUser>, IList<GetUserDTO>>(following);
         }
@@ -155,6 +155,21 @@ namespace SocialPlatformAPI.Persistence.Services
                 mapper.Map(user, currentUser);
                 IdentityResult result = await userManager.UpdateAsync(currentUser);
             }
+        }
+
+        public async Task<IList<GetUserDTO>> SuggestionsUserAsync()
+        {
+            AppUser? user = await GetCurrentUserAsync();
+            if(user is not null)
+            {
+                var users = await userManager.Users
+                    .Include(u => u.Followers)
+                    .Where(u => !u.Followers.Any(f => f.FollowerId == user.Id) && u.Id != user.Id)
+                    .ToListAsync();
+
+                return mapper.Map<IList<GetUserDTO>>(users);
+            }
+            return null;
         }
     }
 }
