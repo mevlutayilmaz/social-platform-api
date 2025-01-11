@@ -41,12 +41,12 @@ namespace SocialPlatformAPI.Persistence.Services
             {
                 var query = postReadRepository.Table.AsQueryable().AsNoTracking();
                 if (!string.IsNullOrEmpty(username)) query = query.Where(p => p.User.UserName == username);
+                else query = query.Where(p => p.UserId == user.Id || p.User.Followers.Any(f => f.FollowerId == user.Id));
                 return await query.Include(p => p.User)
                     .Include(p => p.User)
                     .ThenInclude(u => u.Followers)
                     .Include(p => p.Likes)
                     .OrderByDescending(p => p.CreatedDate)
-                    .Where(p => p.User.Followers.Any(f => f.FollowerId == user.Id))
                     .Skip(pagination.ItemCount * (pagination.PageCount - 1))
                     .Take(pagination.ItemCount)
                     .Select(p => new GetPostDTO

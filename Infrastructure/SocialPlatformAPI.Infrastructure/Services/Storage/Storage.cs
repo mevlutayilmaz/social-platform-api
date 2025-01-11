@@ -51,8 +51,8 @@ namespace SocialPlatformAPI.Infrastructure.Services.Storage
                     }
                 }
 
-                if (hasFileMethod(pathOrContainerName, fileName))
-                    return await FileRenameAsync(pathOrContainerName, fileName, hasFileMethod, false);
+                if (hasFileMethod(pathOrContainerName, newFileName))
+                    return await FileRenameAsync(pathOrContainerName, newFileName, hasFileMethod, false);
                 return newFileName;
             });
 

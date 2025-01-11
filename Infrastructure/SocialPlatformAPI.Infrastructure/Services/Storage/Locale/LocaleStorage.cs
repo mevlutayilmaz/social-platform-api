@@ -50,6 +50,6 @@ namespace SocialPlatformAPI.Infrastructure.Services.Storage.Locale
         }
 
         public bool HasFile(string path, string fileName)
-            => File.Exists($"{path}\\{fileName}");
+            => File.Exists($"C:\\Users\\yilma\\source\\repos\\SocialPlatformAPI\\Presentation\\SocialPlatformAPI.API\\wwwroot\\{path}\\{fileName}");
     }
 }
