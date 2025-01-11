@@ -15,6 +15,7 @@ using SocialPlatformAPI.Application.Features.Queries.Comments.GetComments;
 using SocialPlatformAPI.Application.Features.Queries.Posts.GetAllPosts;
 using SocialPlatformAPI.Application.Features.Queries.Posts.GetPostById;
 using SocialPlatformAPI.Application.Features.Queries.Stories.GetStories;
+using SocialPlatformAPI.Application.Features.Queries.Stories.GetUserStories;
 using SocialPlatformAPI.Domain.Entities;
 using SocialPlatformAPI.Domain.Entities.Identity;
 
@@ -31,6 +32,9 @@ namespace SocialPlatformAPI.Application.Mapping
             CreateMap<Post, GetPostDTO>().ForMember(dest => dest.LikeCount, options => options.MapFrom(src => src.Likes.Count));
 
             CreateMap<GetStoriesDTO, Story>().ReverseMap();
+            CreateMap<StoryDTO, Story>().ReverseMap();
+            CreateMap<StoryDTO, GetStoriesDTO>().ReverseMap();
+            CreateMap<StoryDTO, GetUserStoriesQueryResponse>().ReverseMap();
             CreateMap<GetStoriesDTO, GetStoriesQueryResponse>().ReverseMap();
 
             CreateMap<AppUser, CreateUserCommandRequest>().ReverseMap();

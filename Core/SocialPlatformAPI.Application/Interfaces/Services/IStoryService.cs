@@ -7,5 +7,6 @@ namespace SocialPlatformAPI.Application.Interfaces.Services
         Task CreateStoryAsync(string imageUrl);
         Task DeleteStoryAsync(string id);
         Task<IList<GetStoriesDTO>> GetStoriesAsync();
+        Task<IList<StoryDTO>> GetUserStoriesAsync(string username);
     }
 }

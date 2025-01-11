@@ -37,15 +37,16 @@ namespace SocialPlatformAPI.Persistence.Services
         public async Task<IList<GetPostDTO>> GetAllPostsAsync(Pagination pagination, string? username = null)
         {
             AppUser? user = await userService.GetCurrentUserAsync();
-
             if (user is not null)
             {
                 var query = postReadRepository.Table.AsQueryable().AsNoTracking();
                 if (!string.IsNullOrEmpty(username)) query = query.Where(p => p.User.UserName == username);
                 return await query.Include(p => p.User)
                     .Include(p => p.User)
+                    .ThenInclude(u => u.Followers)
                     .Include(p => p.Likes)
                     .OrderByDescending(p => p.CreatedDate)
+                    .Where(p => p.User.Followers.Any(f => f.FollowerId == user.Id))
                     .Skip(pagination.ItemCount * (pagination.PageCount - 1))
                     .Take(pagination.ItemCount)
                     .Select(p => new GetPostDTO

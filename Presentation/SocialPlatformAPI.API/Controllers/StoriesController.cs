@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SocialPlatformAPI.Application.Features.Commands.Stories.CreateStory;
 using SocialPlatformAPI.Application.Features.Queries.Stories.GetStories;
+using SocialPlatformAPI.Application.Features.Queries.Stories.GetUserStories;
 using SocialPlatformAPI.Application.Interfaces.Services;
 
 namespace SocialPlatformAPI.API.Controllers
@@ -18,11 +20,19 @@ namespace SocialPlatformAPI.API.Controllers
             return Ok(response);
         }
         
-        [HttpPost("[action]")]
-        public async Task<IActionResult> CreateStory(string imageUrl)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetUserStories([FromQuery] GetUserStoriesQueryRequest request)
         {
-            await storyService.CreateStoryAsync(imageUrl);
-            return Ok();
+            IList<GetUserStoriesQueryResponse> response = await mediator.Send(request);
+            return Ok(response);
+        }
+        
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CreateStory([FromForm] CreateStoryCommandRequest
+             request)
+        {
+            CreateStoryCommandResponse response = await mediator.Send(request);
+            return Ok(response);
         }
         
         [HttpDelete("[action]/{id}")]
