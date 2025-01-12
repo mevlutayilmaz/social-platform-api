@@ -1,4 +1,4 @@
-# Social Platform
+# Social Platform API
 
 SoMedia, kullanıcıların birbirleriyle etkileşim kurabileceği, gönderi paylaşabileceği, beğeni ve yorum yapabileceği, birbirlerini takip edebileceği ve hikaye paylaşabileceği bir sosyal medya platformunun backend'idir. Bu backend, modern yazılım mimarisi prensipleri izleyerek, Entity Framework Core ve Code First yaklaşımı ile PostgreSQL veritabanı kullanılarak geliştirilmiştir. API; paylaşımların, hikayelerin, beğenmelerin ve yorumların yönetimini sağlar ve kullanıcı kimlik doğrulaması için JWT (JSON Web Token) kullanır. Proje, Onion Architecture prensipleri doğrultusunda katmanlı bir yapıya sahiptir.
 
